@@ -2,21 +2,21 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import logo from '../../../../Images/pngegg.png'
-// import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
+
 
 const Navbar = () => {
-    // const { user, logOut } = useContext()
+    const { user, logOut } = useContext(AuthContext)
     const [isOpen, setIsOpen] = useState(false)
-    const user = false
     const handleLogOut = () => {
-        // logOut()
-        //     .then(() => {
-        //         Swal.fire(
-        //             'Log Out!',
-        //             'Log Out SuccessFully!',
-        //             'success'
-        //         )
-        //     })
+        logOut()
+            .then(() => {
+                Swal.fire(
+                    'Log Out!',
+                    'Log Out SuccessFully!',
+                    'success'
+                )
+            })
     }
     return (
         <nav x-data="{ isOpen: false }" className="relative bg-white shadow dark:bg-gray-800">
