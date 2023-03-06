@@ -8,9 +8,9 @@ import './Home.css'
 
 const Home = () => {
     const chategories = [
-        { categorieName: 'antique jewellery', image: categorieImg, rating: 4 },
-        { categorieName: 'antique books', image: categorieImg2, rating: 4.5 },
-        { categorieName: 'antique painting', image: categorieImg3, rating: 4.2 }]
+        { categorieName: 'antique jewellery', image: categorieImg, rating: 4, findName: 'jewelry' },
+        { categorieName: 'antique books', image: categorieImg2, rating: 4.5, findName: 'Books' },
+        { categorieName: 'antique painting', image: categorieImg3, rating: 4.2, findName: 'painting' }]
     return (
         <div>
             <div className="bg-white dark:bg-gray-900  bannerbg ">
