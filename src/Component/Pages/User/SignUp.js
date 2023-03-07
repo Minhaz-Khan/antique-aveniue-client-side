@@ -38,7 +38,7 @@ const SignUp = () => {
                                         alert('check your email for verification')
                                         const userDetails = { name, email, password, image: imageUrl, userType: type }
                                         fetch(`http://localhost:5000/users`, {
-                                            method: 'POST',
+                                            method: 'PUT',
                                             headers: {
                                                 'content-type': 'application/json'
                                             },

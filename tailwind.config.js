@@ -70,7 +70,8 @@ module.exports = {
       }
     },
     fontFamily: {
-      Caveat: ['Caveat', 'cursive']
+      Caveat: ['Caveat', 'cursive'],
+      poppins: ['Poppins', 'sans-serif']
     }
   },
   plugins: [require("daisyui")]

@@ -9,7 +9,7 @@ const Footer = () => {
                         <strong
                             className="block text-center text-xl font-bold text-coralRed  sm:text-3xl"
                         >
-                            Want us to email you with the latest blockbuster news?
+                            Want us to email you with the latest Update Antique item?
                         </strong>
 
                         <form className="mt-6">

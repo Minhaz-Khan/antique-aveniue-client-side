@@ -12,14 +12,14 @@ const Home = () => {
         { categorieName: 'antique books', image: categorieImg2, rating: 4.5, findName: 'Books' },
         { categorieName: 'antique painting', image: categorieImg3, rating: 4.2, findName: 'painting' }]
     return (
-        <div>
+        <div className='font-poppins'>
             <div className="bg-white dark:bg-gray-900  bannerbg ">
                 <div className="lg:flex container mx-auto">
                     <div className="flex items-center justify-center w-full px-6 py-8 lg:h-[32rem] lg:w-1/2">
                         <div className="max-w-xl">
-                            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl">Build Your New <span className="text-blue-600 dark:text-blue-400">Idea</span></h2>
+                            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl font-poppins">Discover on <span className="text-maroon">Antique Avenue</span>  </h2>
 
-                            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 lg:text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis commodi cum cupiditate ducimus, fugit harum id necessitatibus odio quam quasi, quibusdam rem tempora voluptates.</p>
+                            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 lg:text-base">Authoritatively monetize leading-edge markets and frictionless customer service. Dramatically deliver seamless supply chains for vertical innovation. Seamlessly engage covalent human capital vis-a-vis B2C methods of empowerment. Energistically seize standards compliant total.</p>
 
                             <div className="flex flex-col mt-6 space-y-3 lg:space-y-0 lg:flex-row">
                                 <Link href="#" className="block px-5 py-2 text-sm font-medium tracking-wider text-center text-white transition-colors duration-300 transform  bg-maroon rounded-md hover:bg-maroonLight">Get Started</Link>

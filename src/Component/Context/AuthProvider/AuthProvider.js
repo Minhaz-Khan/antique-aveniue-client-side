@@ -9,14 +9,9 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(false);
-    console.log(user);
+    const [isLoading, setIsLoading] = useState(true);
 
     const createUser = (email, password) => {
-        console.log(email, password);
-        console.log('hello');
-        console.log(auth);
-        console.log(app);
         setIsLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
@@ -50,7 +45,7 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser);
             setIsLoading(false)
         })
-        return () => unsubscribe()
+        return () => { unsubscribe() }
     }, [])
 
     const authInfo = { user, isLoading, createUser, signIn, logOut, googleSignIn, updateUserProfile, emailVerification }
