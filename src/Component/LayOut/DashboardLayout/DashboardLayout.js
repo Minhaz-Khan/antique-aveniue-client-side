@@ -34,6 +34,23 @@ const DashboardLayout = () => {
                                     <Link class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                                         <span class="mx-2 text-sm font-medium">WishList</span>
                                     </Link>
+                                    <Link class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                                        <span class="mx-2 text-sm font-medium">Add A Product</span>
+                                    </Link>
+                                    <Link class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                                        <span class="mx-2 text-sm font-medium">My Products</span>
+                                    </Link>
+                                    <Link class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                                        <span class="mx-2 text-sm font-medium">My Buyers</span>
+                                    </Link>
+                                    <Link class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                                        <span class="mx-2 text-sm font-medium">All Sellers</span>
+                                    </Link>
+                                    <Link class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                                        <span class="mx-2 text-sm font-medium">
+                                            All Buyers
+                                        </span>
+                                    </Link>
                                 </div>
                                 <div class="flex flex-col items-center mt-20 -mx-2">
                                     <img class="object-cover w-16 h-16 mx-2 rounded-full" src={user?.photoURL} alt="avatar" />
