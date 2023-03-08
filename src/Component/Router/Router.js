@@ -7,7 +7,7 @@ import SignUp from "../Pages/User/SignUp";
 import AllSalePost from "../Pages/AllSalePost/AllSalePost";
 import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import DashboardLayout from "../LayOut/DashboardLayout/DashboardLayout";
-import Dashboard from "../Dashboard/Dashboard";
+import Dashboard from "../Dashboard/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
     {

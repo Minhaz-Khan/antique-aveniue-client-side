@@ -1,13 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import logo from '../../../Images/pngegg.png';
 import loginimg from '../../../Images/bgandcategori/login image.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import useToken from '../../useToken/useToken';
 const SignUp = () => {
-    const { createUser, updateUserProfile, emailVerification } = useContext(AuthContext)
+    const { createUser, updateUserProfile, emailVerification, googleSignIn } = useContext(AuthContext);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
+
     const imageHostKey = process.env.REACT_APP_imageKey;
+    const [userEmail, setUserEmail] = useState()
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const token = useToken(userEmail);
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true })
+        }
+    }, [token, navigate, from])
     const handleSignUp = data => {
         const name = data.name;
         const email = data.email;
@@ -30,15 +44,13 @@ const SignUp = () => {
                 createUser(email, password)
                     .then(result => {
                         const user = result.user;
-                        const currentUser = { email: user.email };
                         updateUserProfile(name, imageUrl)
                             .then(() => {
                                 emailVerification()
                                     .then(() => {
-                                        alert('check your email for verification')
                                         const userDetails = { name, email, password, image: imageUrl, userType: type }
                                         fetch(`http://localhost:5000/users`, {
-                                            method: 'PUT',
+                                            method: 'POST',
                                             headers: {
                                                 'content-type': 'application/json'
                                             },
@@ -47,18 +59,9 @@ const SignUp = () => {
                                             .then(res => res.json())
                                             .then(data => {
                                                 console.log(data)
-                                                fetch('http://localhost:5000/jwt', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'content-type': 'application/json'
-                                                    },
-                                                    body: JSON.stringify(currentUser)
-                                                })
-                                                    .then(res => res.json())
-                                                    .then(data => {
-                                                        console.log(data);
-                                                        localStorage.setItem('token', data.token)
-                                                    })
+                                                setUserEmail(user.email);
+                                                alert('your account sing up successfully')
+                                                alert('check your email for verification')
                                             })
 
 
@@ -72,6 +75,32 @@ const SignUp = () => {
 
             })
             .catch(err => console.log(err))
+    }
+
+    const handleGoogleSignUp = () => {
+        googleSignIn()
+            .then(result => {
+                const user = result.user;
+                const email = user.email;
+                const name = user.displayName;
+                const image = user.photoURL;
+                const userType = 'buyer';
+                const userDetails = { email, image, name, userType }
+                fetch(`http://localhost:5000/users`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userDetails)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        setUserEmail(user.email);
+                        alert('your google sing up successfully')
+                    })
+            })
+            .catch(e => console.log(e))
     }
     return (
         <div className='h-screen flex items-center bg-Beige'>
@@ -87,7 +116,7 @@ const SignUp = () => {
                         Welcome back!
                     </p>
 
-                    <Link href="#" className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <Link onClick={handleGoogleSignUp} className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <div className="px-4 py-2">
                             <svg className="w-6 h-6" viewBox="0 0 40 40">
                                 <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#FFC107" />

@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../Images/pngegg.png'
 import './Login.css';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
+import useToken from '../../useToken/useToken';
 
 const Login = () => {
     const location = useLocation();
@@ -12,21 +13,30 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
     const { signIn, isLoading, googleSignIn } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const handleLogin = event => {
-        event.preventDefault();
-        const form = event.target;
-        const email = form.email.value;
-        const password = form.password.value;
+    const [userEmail, setUserEmail] = useState('');
+    console.log(userEmail);
+    const token = useToken(userEmail);
+
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true })
+        }
+    }, [token, navigate, from])
+    const handleLogin = data => {
+        const email = data.email;
+        const password = data.password;
+        console.log(email.password);
 
         signIn(email, password)
             .then(result => {
                 const user = result.user;
+                setUserEmail(user.email)
                 Swal.fire(
                     'Login',
                     'You are login successfully!',
                     'success'
                 )
-                navigate(from, { replace: true })
+
             })
             .catch(err => console.log(err))
 
@@ -35,9 +45,26 @@ const Login = () => {
         googleSignIn()
             .then(result => {
                 const user = result.user;
-                navigate(from, { replace: true })
+                const email = user.email;
+                const name = user.displayName;
+                const image = user.photoURL;
+                const userType = 'buyer';
+                const userDetails = { email, image, name, userType }
+                fetch(`http://localhost:5000/users`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userDetails)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                    })
+                setUserEmail(email);
+                alert('your google sing up successfully')
             })
-            .catch(err => console.log(err))
+            .catch(e => console.log(e))
     }
     return (
         <div className='h-screen flex items-center bg-Beige'>
