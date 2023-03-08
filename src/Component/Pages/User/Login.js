@@ -34,7 +34,8 @@ const Login = () => {
                 Swal.fire(
                     'Login',
                     'You are login successfully!',
-                    'success'
+                    'success',
+
                 )
 
             })

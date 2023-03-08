@@ -30,7 +30,11 @@ const router = createBrowserRouter([
             {
                 path: 'allSalePost/:findName',
                 element: <PrivetRoute> <AllSalePost></AllSalePost></PrivetRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/allSalePost?categorie=${params.findName}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/allSalePost?categorie=${params.findName}`, {
+                    headers: {
+                        authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
             }
         ]
     },

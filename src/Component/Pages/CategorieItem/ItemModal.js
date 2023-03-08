@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Swal from 'sweetalert2';
 // import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
@@ -22,7 +23,35 @@ const ItemModal = ({ modalItem, setModalItem }) => {
             image,
             salePrice
         }
-        console.log(bookingDetails);
+        // console.log(bookingDetails);
+        fetch(`http://localhost:5000/booking`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(bookingDetails)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.acknowledged) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Booked this item',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else if (data.message === 'alreay booked') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'this item alreay booked',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
         setModalItem(null)
     }
     return (
