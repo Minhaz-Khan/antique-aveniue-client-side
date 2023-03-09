@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineUser } from "react-icons/ai";
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const CategorieItem = ({ categorieItem, setModalItem }) => {
+    const { user } = useContext(AuthContext)
     const { _id, productName, condition, status, categories, sellerName, location, oldPrice, salePrice, postTime, image, details } = categorieItem;
+    const handleWishList = () => {
+        const bookingDetails = {
+            meetingLocation: location,
+            buyerName: user.displayName,
+            buyerEmail: user.email,
+            bookedProductId: _id,
+            productName,
+            image,
+            salePrice
+        }
+        fetch(`http://localhost:5000/wishlist`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(bookingDetails)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    Swal.fire(
+                        'wishlist added',
+                        'Your wishlist added check your wishlist route',
+                        'success'
+                    )
+                }
+            })
+    }
     return (
         <div className="w-full max-w-sm  bg-white rounded-lg shadow-lg dark:bg-gray-800">
             <div className='overflow-hidden'>
@@ -43,7 +75,7 @@ const CategorieItem = ({ categorieItem, setModalItem }) => {
                 </div>
                 <div className='flex justify-center  left-0 space-x-4 bottom-[-20px] absolute items-center w-full'>
                     <label onClick={() => setModalItem(categorieItem)} htmlFor="antique-modal" className=" font-medium py-2 px-3 rounded-lg uppercase hover:bg-maroonLight text-white  bg-maroon duration-100">Book Now</label>
-                    <label className="px-3 py-2 btn-ghost bg-gray-100 rounded-lg uppercase font-medium">WishList</label>
+                    <label onClick={handleWishList} className="px-3 py-2 btn-ghost bg-gray-100 rounded-lg uppercase font-medium">WishList</label>
                 </div>
             </div>
         </div >

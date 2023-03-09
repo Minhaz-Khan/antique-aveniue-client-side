@@ -96,7 +96,7 @@ const SignUp = () => {
                     .then(res => res.json())
                     .then(data => {
                         console.log(data)
-                        setUserEmail(user.email);
+                        setUserEmail(email);
                         alert('your google sing up successfully')
                     })
             })

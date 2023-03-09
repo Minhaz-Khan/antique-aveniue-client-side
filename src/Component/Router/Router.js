@@ -9,6 +9,9 @@ import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import DashboardLayout from "../LayOut/DashboardLayout/DashboardLayout";
 import Dashboard from "../Dashboard/Dashboard/Dashboard";
 import MyOrders from "../Dashboard/MyOrders/MyOrders";
+import MyWishList from "../Dashboard/WishList/MyWishList";
+import AdminRoute from "../PrivetRoute/AdminRoute";
+import AddProduct from "../Dashboard/AddProduct/AddProduct";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +45,7 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <DashboardLayout></DashboardLayout>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/dashboard',
@@ -50,7 +54,15 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/myorders',
                 element: <MyOrders></MyOrders>
-            }
+            },
+            {
+                path: '/dashboard/wishlist',
+                element: <MyWishList></MyWishList>
+            },
+            {
+                path: '/dashboard/addproduct',
+                element: <AddProduct></AddProduct>
+            },
         ]
     }
 ])

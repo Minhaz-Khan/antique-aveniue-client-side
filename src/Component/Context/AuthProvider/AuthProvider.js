@@ -9,46 +9,46 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const createUser = (email, password) => {
-        setIsLoading(true)
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const signIn = (email, password) => {
-        setIsLoading(true)
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
     const googleSignIn = () => {
-        setIsLoading(true)
+        setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
     const logOut = () => {
-        setIsLoading(true)
+        setLoading(true)
         return signOut(auth)
     }
     const updateUserProfile = (name, photo) => {
-        setIsLoading(true)
+        setLoading(true)
         return updateProfile(auth.currentUser, {
             displayName: name, photoURL: photo
         })
     }
     const emailVerification = () => {
-        setIsLoading(true)
+        setLoading(true)
         return sendEmailVerification(auth.currentUser)
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setIsLoading(false)
+            setLoading(false)
         })
         return () => { unsubscribe() }
     }, [])
 
-    const authInfo = { user, isLoading, createUser, signIn, logOut, googleSignIn, updateUserProfile, emailVerification }
+    const authInfo = { user, loading, createUser, signIn, logOut, googleSignIn, updateUserProfile, emailVerification }
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
