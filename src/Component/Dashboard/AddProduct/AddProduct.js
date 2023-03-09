@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import { BsArrowRight } from "react-icons/bs";
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
     const { user } = useContext(AuthContext);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset } = useForm();
 
     const handleAddProduct = (data) => {
         const imageHostKey = process.env.REACT_APP_imageKey;
@@ -20,17 +21,32 @@ const AddProduct = () => {
         const salePrice = data.salePrice;
         const image = data.image[0];
         const details = data.details
-        const newProduct = { postTime, status, sellerEmail, sellerName, productName, condition, categories, oldPrice, salePrice, image, details }
-        console.log(newProduct);
-        // const formData = new FormData();
-        // formData.append('image', image);
-        // const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
-        // fetch(url, {
-        //     method: "POST",
-        //     body: formData,
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {})
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(data => {
+                const newProduct = { postTime, status, sellerEmail, sellerName, productName, condition, categories, oldPrice, salePrice, image: data.data.display_url, details }
+                fetch(`http://localhost:5000/addProduct?email=${user?.email}`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(newProduct)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.acknowledged) {
+                            toast.success('Your product is added')
+                            reset()
+                        }
+                    })
+            })
     }
     return (
         <div>
@@ -62,7 +78,7 @@ const AddProduct = () => {
 
                                 <div >
                                     <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200" htmlFor="loggingPassword">Condition</label>
-                                    <select {...register('conditon', { required: true })} defaultValue={'Used'} className='w-full py-3 px-5   text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300'>
+                                    <select {...register('conditon', { required: true })} className='w-full py-3 px-5   text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300'>
 
                                         <option>Used</option>
                                         <option>Good</option>
@@ -73,11 +89,11 @@ const AddProduct = () => {
 
                                 <div >
                                     <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200" htmlFor="loggingPassword">Categories</label>
-                                    <select {...register('Categories', { required: true })} defaultValue={'ANTIQUE JEWELLERY'} className='w-full py-3 px-5   text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300'>
+                                    <select {...register('Categories', { required: true })} className='w-full py-3 px-5   text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300'>
 
-                                        <option>ANTIQUE JEWELLERY</option>
-                                        <option>ANTIQUE BOOKS</option>
-                                        <option>ANTIQUE PAINTING</option>
+                                        <option>jewelry</option>
+                                        <option>Books</option>
+                                        <option>painting</option>
 
                                     </select>
                                 </div>
