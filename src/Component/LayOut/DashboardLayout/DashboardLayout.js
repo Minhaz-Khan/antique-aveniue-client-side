@@ -7,7 +7,6 @@ import useUserType from '../../useUserType/useUserType'
 
 const DashboardLayout = () => {
     const { user } = useContext(AuthContext);
-    console.log(user);
     const { userType, isLoading } = useUserType(user?.email)
     console.log(userType);
     return (
@@ -16,7 +15,7 @@ const DashboardLayout = () => {
             <div className="drawer drawer-mobile container mx-auto  ">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col ">
-                    <Outlet></Outlet>
+                    <Outlet ></Outlet>
                 </div>
                 <div className="drawer-side ">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
@@ -28,8 +27,8 @@ const DashboardLayout = () => {
                                 <div className="space-y-3 ">
                                     <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">analytics</label>
 
-                                    <Link to={'/'} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                                        <span className="mx-2 text-sm font-medium">Home</span>
+                                    <Link to={'/dashboard'} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                                        <span className="mx-2 text-sm font-medium">Dashboard</span>
                                     </Link>
                                     {userType === 'Buyer' && <>
                                         <Link to={'/dashboard/myorders'} className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">

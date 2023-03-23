@@ -49,19 +49,19 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <PrivetRoute><Dashboard></Dashboard></PrivetRoute>
+                element: <AdminRoute><Dashboard></Dashboard></AdminRoute>
             },
             {
                 path: '/dashboard/myorders',
-                element: <MyOrders></MyOrders>
+                element: <AdminRoute><MyOrders></MyOrders></AdminRoute>
             },
             {
                 path: '/dashboard/wishlist',
-                element: <MyWishList></MyWishList>
+                element: <AdminRoute><MyWishList></MyWishList></AdminRoute>
             },
             {
                 path: '/dashboard/addproduct',
-                element: <AddProduct></AddProduct>
+                element: <AdminRoute><AddProduct></AddProduct></AdminRoute>
             },
         ]
     }

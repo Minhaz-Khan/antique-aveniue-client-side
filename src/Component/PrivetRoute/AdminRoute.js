@@ -8,7 +8,8 @@ const AdminRoute = ({ children }) => {
     const location = useLocation()
     const { user, loading } = useContext(AuthContext);
     const { userType, isLoading } = useUserType(user?.email)
-    if (loading && isLoading) {
+    console.log(userType);
+    if (loading || isLoading) {
         return <dir className='h-screen flex justify-center items-center'>
             <Triangle
                 height="80"
