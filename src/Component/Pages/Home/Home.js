@@ -5,6 +5,8 @@ import categorieImg from '../../../Images/bgandcategori/pexels-rezoana-amin-rayn
 import categorieImg2 from '../../../Images/bgandcategori/pexels-rodnae-productions-7979097.jpg'
 import categorieImg3 from '../../../Images/bgandcategori/pexels-two-dreamers-2716895.jpg'
 import './Home.css'
+import Advertise from '../Advertise/Advertise';
+import Testimonials from '../Testimonials/Testimonials';
 
 const Home = () => {
     const chategories = [
@@ -38,10 +40,17 @@ const Home = () => {
                 </div>
             </div>
             <div className='container mx-auto my-10'>
-                <h3 className='text-5xl font-semibold text-center text-maroon font-Caveat my-10'>Our Categories</h3>
+
+                <Advertise></Advertise>
+            </div>
+            <div className='container mx-auto my-10'>
+
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
                     {chategories.map((item, i) => <Categorie key={i} item={item}></Categorie>)}
                 </div>
+            </div>
+            <div className='container mx-auto my-10'>
+                <Testimonials></Testimonials>
             </div>
         </div>
     );
